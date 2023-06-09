@@ -1,0 +1,6 @@
+{application, rmq, [
+    {description, "RabbitMQ client"},
+    {vsn, "1.0.0"},
+    {applications, [kernel, stdlib, amqp_client, inets, hapi, jiffy]},
+    {mod, {rmq, []}}
+]}.
