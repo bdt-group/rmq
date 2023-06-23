@@ -29,3 +29,20 @@ test:
 
 test_compile:
 	@$(REBAR) as test compile
+
+dc_%: compose
+		$(make $*)
+
+compose: export DC_UID   = $(shell id -u)
+compose: export DC_GID   = $(shell id -g)
+compose: export DC_USER  = $(shell id -un)
+compose: export DC_GROUP = $(shell id -gn)
+compose:
+	docker-compose up -d
+
+decompose: export DC_UID   = $(shell id -u)
+decompose: export DC_GID   = $(shell id -g)
+decompose: export DC_USER  = $(shell id -un)
+decompose: export DC_GROUP = $(shell id -gn)
+decompose:
+	docker-compose down

@@ -8,11 +8,42 @@ Requirements
 
 The library is built under Ubuntu 18.04 and requires OTP 22, does not work on OTP 24 and above. For other versions of OTP, the work of the library has not been tested.
 
-To run library tests, you need to raise the rabbitmq image via docker-compose.yml
+Building and testing
+--------------------
 
-Usage in development
+Compile:
+```shell
+make compile 
+```
+
+Run tests with rabbitmq in local env (must be on localhost:5672 and have rmq:rmq user/password):
+```shell
+make test
+```
+
+Run tests with rabbitmq in docker-compose (requires OTP 22 and docker-compose):
+```shell
+make dc_test
+```
+
+Cleanup:
+```shell
+make clean
+make distclean
+make decompose #put down docker-compose stack used for tests
+```
+
+Usage
 --------------------
 This library explicitly specifies that the producer creates exchanges, the consumer creates queues. Therefore when interfacing via rabbitmq the necessary exchanges must be created by either external means(script or launch of other service which declares the necessary exchanges) or the service itself must create a producer before consumers.
+
+Add library as dependency (rebar3 example):
+```erlang
+{deps, [
+    {rmq, {git, "https://github.com/bdt-group/smpp", {branch, "master"}}},
+]}.
+
+```
 
 An example of a typical connection to rabbitmq queues. 
 Producer:
