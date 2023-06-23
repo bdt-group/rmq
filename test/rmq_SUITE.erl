@@ -174,7 +174,7 @@ handle_cancel(_) ->
     Monitor = erlang:monitor(process, ConsumerPid),
     ct:sleep({seconds, 1}),
 
-    ManagementURI = uri_string:parse("http://cleep:cleep@rabbitmq:15672"),
+    ManagementURI = uri_string:parse("http://cleep:cleep@127.0.0.1:15672"),
     #{queue := Queue, create := #{exchange := BoundedExchange}} = config(consumer2),
     ok = rmq_management:destroy_consumer(ManagementURI, <<"/">>, Queue, BoundedExchange, timer:seconds(5)),
     ct:sleep({seconds, 1}),
@@ -193,12 +193,12 @@ double_stop(_) ->
     ?assertEqual(ok, rmq:stop()).
 
 destroy_consumer(_) ->
-    ManagementURI = uri_string:parse("http://cleep:cleep@rabbitmq:15672"),
+    ManagementURI = uri_string:parse("http://cleep:cleep@127.0.0.1:15672"),
     #{queue := Queue, create := #{exchange := BoundedExchange}} = config(consumer),
     ok = rmq_management:destroy_consumer(ManagementURI, <<"/">>, Queue, BoundedExchange, timer:seconds(5)).
 
 destroy_producer(_) ->
-    ManagementURI = uri_string:parse("http://cleep:cleep@rabbitmq:15672"),
+    ManagementURI = uri_string:parse("http://cleep:cleep@127.0.0.1:15672"),
     Exchange = maps:get(exchange, config(producer)),
     ok = rmq_management:destroy_producer(ManagementURI, <<"/">>, Exchange, timer:seconds(5)).
 
@@ -239,7 +239,7 @@ config(producer2) ->
       create => #{}}.
 
 rmq_uri() ->
-    uri_string:parse("amqp://cleep:cleep@rabbitmq:5672").
+    uri_string:parse("amqp://cleep:cleep@127.0.0.1:5672").
 
 disable_lager() ->
     application:set_env(lager, crash_log, false),
