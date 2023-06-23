@@ -239,7 +239,7 @@ config(producer2) ->
       create => #{}}.
 
 rmq_uri() ->
-    uri_string:parse("amqp://cleep:cleep@127.0.0.1:5672").
+    uri_string:parse("amqp://rmq:rmq@127.0.0.1:5672").
 
 disable_lager() ->
     application:set_env(lager, crash_log, false),
